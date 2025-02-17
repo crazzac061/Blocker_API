@@ -7,7 +7,7 @@ blocked_sites= ["https://www.instagram.com","https://www.messenger.com"]
 @app.route ('/get_blocklist',method=['GET'])
 
 def get_blocklist():
-    return jsonify({"blocked_sites":blockeds_sites})
+    return jsonify({"blocked_sites":blocked_sites})
 
 @app.route('/add_block',method=['POST'])
 
@@ -28,4 +28,4 @@ def remove_block():
         return jsonify({"message":"Site remmoved!!","blocked_sites":blocked_sites}),200
     return jsonify({"message":"Site not found"})
 if __name__=='__main__':
-    app.run(host='0.0.0.0',port=5000,debug=Trure)
+    app.run(host='0.0.0.0',port=5000,debug=True)

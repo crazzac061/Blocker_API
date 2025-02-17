@@ -12,15 +12,17 @@ async function updateBlocklist()
         return [];
     }
 }
+async function blockRequests(){
+    const blocklist=await fetchBlocklist();
 
-chrome.webRequest.onBeforeRequest.addListener(
-    async function(details){
-        const blocklist=await updateBlocklist();
-        if (blocklist.includes(details.url))
-        {
+    browser.webRequest.onBeforeRequest.addListener(
+       async function(details){
             return {cancel:true};
-        }
-    },
-    {urls:["<all_urls>"]},
+        
+       },
+    {urls:blocklist},
     ["blocking"]
 );
+}
+
+blockRequests();
