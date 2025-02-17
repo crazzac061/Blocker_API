@@ -12,17 +12,32 @@ async function updateBlocklist()
         return [];
     }
 }
+async function fetchBlocklist(){
+    return [
+        "*://*.instagram.com/*",
+        "*://*.messenger.com/*"
+    ]
+}
+
+
 async function blockRequests(){
+    try{
     const blocklist=await fetchBlocklist();
 
     browser.webRequest.onBeforeRequest.addListener(
-       async function(details){
+       function(details){
+        console.log("Blocked:",details.url);
+
             return {cancel:true};
         
        },
     {urls:blocklist},
     ["blocking"]
 );
+    }
+    catch(error){
+        console.error("error fetching blocklist:",error);
+    }
 }
 
 blockRequests();
